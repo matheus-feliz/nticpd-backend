@@ -6,7 +6,8 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "nodemon servidor.js",
-        "bluid": "node dist/servidor.js"
+        "start": "node dist/servidor.js",
+        "build": "sucrase ./src -d ./dist --transforms imports"
         
     },
     "keywords": [],
