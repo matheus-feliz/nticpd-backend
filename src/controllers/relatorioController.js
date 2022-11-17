@@ -1,5 +1,5 @@
-"use strict"; function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _ServicoComEquipamentoModel = require('../models/computador/ServicoComEquipamentoModel'); var _ServicoComEquipamentoModel2 = _interopRequireDefault(_ServicoComEquipamentoModel);
-var _ServicoSemEquipamentoModel = require('../models/unidade/ServicoSemEquipamentoModel'); var _ServicoSemEquipamentoModel2 = _interopRequireDefault(_ServicoSemEquipamentoModel);
+import ServicoComEquipamento from '../models/computador/ServicoComEquipamentoModel';
+import ServicoSemEquipamento  from '../models/unidade/ServicoSemEquipamentoModel';
 
 exports.relatorio = (req, res) => { // inicio do relatorio
     res.render('relatorio', { total: {}, totalDeServico: 0, dataInicial: '', dataFinal: '' });
@@ -9,8 +9,8 @@ exports.relatorioBanco = async(req, res) => { //faz o relatorio
  try {
         let dataInicial = req.body.dataInicial;
         let dataFinal = req.body.dataFinal;
-        let servicoComEquipamento = await _ServicoComEquipamentoModel2.default.buscaPorData(dataInicial, dataFinal);
-        let servicoSemEquipamento = await _ServicoSemEquipamentoModel2.default.buscaPorData(dataInicial, dataFinal);
+        let servicoComEquipamento = await ServicoComEquipamento.buscaPorData(dataInicial, dataFinal);
+        let servicoSemEquipamento = await ServicoSemEquipamento.buscaPorData(dataInicial, dataFinal);
         let servicoTotal = servicoComEquipamento.concat(servicoSemEquipamento);
 
         let totalDeServico = servicoTotal.length;

@@ -1,19 +1,19 @@
-"use strict"; function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var _UnidadeModel = require('../../models/unidade/UnidadeModel'); var _UnidadeModel2 = _interopRequireDefault(_UnidadeModel);
-var _ServicoSemEquipamentoModel = require('../../models/unidade/ServicoSemEquipamentoModel'); var _ServicoSemEquipamentoModel2 = _interopRequireDefault(_ServicoSemEquipamentoModel);
-var _ServicoComEquipamentoModel = require('../../models/computador/ServicoComEquipamentoModel'); var _ServicoComEquipamentoModel2 = _interopRequireDefault(_ServicoComEquipamentoModel);
+
+import Unidade  from '../../models/unidade/UnidadeModel';
+import Servico  from '../../models/unidade/ServicoSemEquipamentoModel';
+import ServicoEquipamento from'../../models/computador/ServicoComEquipamentoModel';
 
 //serviço de unidade daqui para baixo
 exports.listagem = async function (req, res) { // listagem de unidade
     try {
         if (!req.params.id) return res.status('404');
-        let unidade = await _UnidadeModel2.default.buscaId(req.params.id)
+        let unidade = await Unidade.buscaId(req.params.id)
         if (!unidade) {
-            let servicoID = await _ServicoSemEquipamentoModel2.default.buscaPorId(req.params.id)
-            unidade = await _UnidadeModel2.default.buscaListagem(servicoID.unidade)
+            let servicoID = await Servico.buscaPorId(req.params.id)
+            unidade = await Unidade.buscaListagem(servicoID.unidade)
             if (!unidade) return res.json(null);
         };
-       let servicos = await _ServicoSemEquipamentoModel2.default.buscaListagem(unidade.unidade);
+       let servicos = await Servico.buscaListagem(unidade.unidade);
         res.json({unidade, servicos});
 
     } catch (e) {
@@ -23,14 +23,14 @@ exports.listagem = async function (req, res) { // listagem de unidade
 
 exports.cadastroDeServicoPost = async function (req, res) { // post cadstro de servico  de unidade
    try {
-        const servicoUnidade = await _ServicoSemEquipamentoModel2.default.busca();
-        const servicoEquipamento = await _ServicoComEquipamentoModel2.default.busca();
+        const servicoUnidade = await Servico.busca();
+        const servicoEquipamento = await ServicoEquipamento.busca();
         let numeroDeServico = servicoUnidade.length + servicoEquipamento.length + 1;
-        const servico = new (0, _ServicoSemEquipamentoModel2.default)(req.body, numeroDeServico.toString());
+        const servico = new Servico(req.body, numeroDeServico.toString());
         await servico.register();
         if (servico.errors.length > 0) {
             req.session.save(async function () {
-                const unidade = await _UnidadeModel2.default.buscaListagem(req.body.unidade);
+                const unidade = await Unidade.buscaListagem(req.body.unidade);
                 if (!unidade) return res.json(null);
                 res.json(servico.errors);
                 return;
@@ -48,7 +48,7 @@ exports.cadastroDeServicoPost = async function (req, res) { // post cadstro de s
 
 exports.editServicoCadastro = async function (req, res) { // post edit de servico  de unidade
     try {
-        const servico = new (0, _ServicoSemEquipamentoModel2.default)(req.body);
+        const servico = new Servico(req.body);
         await servico.edit(req.params.id);
         if (servico.errors.length > 0) {
             req.session.save(async function () {
@@ -68,9 +68,9 @@ exports.editServicoCadastro = async function (req, res) { // post edit de servic
 exports.deleteServicoUm = async function (req, res) { // delete de servico  de unidade
   try {
         if (!req.params.id) return res.status('404');
-        const unidadeServico = await _ServicoSemEquipamentoModel2.default.buscaPorId(req.params.id);
+        const unidadeServico = await Servico.buscaPorId(req.params.id);
         //const unidade = await Unidade.buscaListagem(unidadeServico.unidade);
-        const servico = await _ServicoSemEquipamentoModel2.default.deleteOne(req.params.id);
+        const servico = await Servico.deleteOne(req.params.id);
         if (!servico) return res.json(null);
         req.session.save(function () {
             res.json('deletado com sucesso');
@@ -84,7 +84,7 @@ exports.deleteServicoUm = async function (req, res) { // delete de servico  de u
 exports.impressao = async function (req, res) { // impressão de servico  de unidade
  try {
         if (!req.params.id) return res.status('404');
-        const impressao = await _ServicoSemEquipamentoModel2.default.buscaPorId(req.params.id);
+        const impressao = await Servico.buscaPorId(req.params.id);
         if (!impressao) res.json(null);
         res.json(impressao);
 

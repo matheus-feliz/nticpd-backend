@@ -1,4 +1,4 @@
-"use strict";exports.meuMiddleware = (req, res, next) => {//variavel global
+exports.meuMiddleware = (req, res, next) => {//variavel global
     res.locals.errors = req.flash('errors');
     res.locals.success = req.flash('success');
     res.locals.user = req.session.user;

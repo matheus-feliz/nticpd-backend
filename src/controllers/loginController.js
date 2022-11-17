@@ -1,9 +1,9 @@
-"use strict"; function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-var _LoginModel = require('../models/LoginModel'); var _LoginModel2 = _interopRequireDefault(_LoginModel);
+
+import Login from '../models/LoginModel';
 
 exports.login = async function (req, res) {//faz login
     try {
-        const login = new (0, _LoginModel2.default)(req.body);
+        const login = new Login(req.body);
         await login.login();
 
         if (login.errors.length > 0) {
@@ -33,7 +33,7 @@ exports.logout = function (req, res) {
 //falta implementar o cadastro aqui
 exports.register = async function (req, res) {
    try {
-        const register = new (0, _LoginModel2.default)(req.body);
+        const register = new Login(req.body);
 
         await register.register();
         if (register.errors.length > 0) {

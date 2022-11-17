@@ -1,8 +1,8 @@
-"use strict"; function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _mongoose = require('mongoose'); var _mongoose2 = _interopRequireDefault(_mongoose);
-var _validator = require('validator'); var _validator2 = _interopRequireDefault(_validator);
-var _bcryptjs = require('bcryptjs'); var _bcryptjs2 = _interopRequireDefault(_bcryptjs);
+import mongoose from 'mongoose';
+import valida from 'validator';
+import bcryptjs  from 'bcryptjs';
 
-const LoginSchema = new _mongoose2.default.Schema({//dados
+const LoginSchema = new mongoose.Schema({//dados
     nome: {
         type: String,
         required: true
@@ -23,7 +23,7 @@ const LoginSchema = new _mongoose2.default.Schema({//dados
 });
 
 
-const LoginModel = _mongoose2.default.model('Login', LoginSchema);//conexão
+const LoginModel = mongoose.model('Login', LoginSchema);//conexão
 
 class Login {
     constructor(body) {
@@ -41,7 +41,7 @@ class Login {
                 return;
             }
 
-            if (!_bcryptjs2.default.compareSync(this.body.password, this.user.password)) {
+            if (!bcryptjs.compareSync(this.body.password, this.user.password)) {
                 this.errors.push('senha invalida');
                 this.user = null;
                 return;
@@ -68,7 +68,7 @@ class Login {
         //garente o tipo string
         this.limpaBody();
         //valida email
-        if (!_validator2.default.isEmail(this.body.email)) this.errors.push('E-mail inválido');
+        if (!valida.isEmail(this.body.email)) this.errors.push('E-mail inválido');
         //valida se a senha é iqual
         if (this.body.password !== this.body.password2) this.errors.push('senha não são iquais');
     }
@@ -81,9 +81,9 @@ class Login {
         }
     }
     async create() {//cria o cadastro no banco
-        const salt = _bcryptjs2.default.genSaltSync();
-        this.body.password = _bcryptjs2.default.hashSync(this.body.password, salt);
-        this.body.password2 = _bcryptjs2.default.hashSync(this.body.password2, salt);
+        const salt = bcryptjs.genSaltSync();
+        this.body.password = bcryptjs.hashSync(this.body.password, salt);
+        this.body.password2 = bcryptjs.hashSync(this.body.password2, salt);
         this.user = await LoginModel.create(this.body);
 
     }
@@ -103,9 +103,9 @@ class Login {
         };
         const user = await this.buscaPorIdNoStatic(id);
         this.body.email = user.email;
-        const salt = _bcryptjs2.default.genSaltSync();
-        this.body.password = _bcryptjs2.default.hashSync(this.body.password, salt);
-        this.body.password2 = _bcryptjs2.default.hashSync(this.body.password2, salt);
+        const salt = bcryptjs.genSaltSync();
+        this.body.password = bcryptjs.hashSync(this.body.password, salt);
+        this.body.password2 = bcryptjs.hashSync(this.body.password2, salt);
         this.user = await LoginModel.findByIdAndUpdate(id, this.body, { new: true });
     }
     async buscaPorIdNoStatic(id) {//busca id

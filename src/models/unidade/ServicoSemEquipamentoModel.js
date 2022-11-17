@@ -1,6 +1,6 @@
-"use strict"; function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _mongoose = require('mongoose'); var _mongoose2 = _interopRequireDefault(_mongoose);
+import mongoose  from 'mongoose';
 
-const ServicoSchema = new _mongoose2.default.Schema({ //dados
+const ServicoSchema = new mongoose.Schema({ //dados
     telefone: {
         type: String,
         required: true
@@ -32,7 +32,7 @@ const ServicoSchema = new _mongoose2.default.Schema({ //dados
     criadoEm: { type: Date, default: Date.now }
 });
 
-const ServicoMOdel = _mongoose2.default.model('servicoSemEquipamento', ServicoSchema); //conexão com o banco
+const ServicoMOdel = mongoose.model('servicoSemEquipamento', ServicoSchema); //conexão com o banco
 
 class servicoSemEquipamento {
     constructor(body, numero) {

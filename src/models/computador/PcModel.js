@@ -1,6 +1,6 @@
-"use strict"; function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _mongoose = require('mongoose'); var _mongoose2 = _interopRequireDefault(_mongoose);
+import mongoose from 'mongoose';
 
-const PcSchema = new _mongoose2.default.Schema({ //dados
+const PcSchema = new mongoose.Schema({ //dados
     telefone: {
         type: String,
         required: true
@@ -28,7 +28,7 @@ const PcSchema = new _mongoose2.default.Schema({ //dados
     criadoEm: { type: Date, default: Date.now }
 });
 
-const PcModel = _mongoose2.default.model('equipamento', PcSchema); //conexão no banco
+const PcModel = mongoose.model('equipamento', PcSchema); //conexão no banco
 
 class Pc {
     constructor(body) {

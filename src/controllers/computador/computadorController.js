@@ -1,8 +1,8 @@
-"use strict"; function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }var _PcModel = require('../../models/computador/PcModel'); var _PcModel2 = _interopRequireDefault(_PcModel);
+import Pc from '../../models/computador/PcModel';
 
 exports.cadastro = async function(req, res) { // post cadastro de equipamento
     try {
-        const pc = new (0, _PcModel2.default)(req.body);
+        const pc = new Pc(req.body);
         await pc.register();
         if (pc.errors.length > 0) {
             req.session.save(function() {
@@ -23,7 +23,7 @@ exports.cadastro = async function(req, res) { // post cadastro de equipamento
 
 exports.editEquipamentoPost = async function(req, res) { // post edit de servico 
     try {
-        const pc = new (0, _PcModel2.default)(req.body);
+        const pc = new Pc(req.body);
         await pc.edit(req.params.id);
         if (pc.errors.length > 0) {
             req.session.save(async function() {
@@ -42,7 +42,7 @@ exports.editEquipamentoPost = async function(req, res) { // post edit de servico
 
 
 exports.buscaRetorno = async function(req, res) { //busca com redorno do banco
-    const equipamentos = await _PcModel2.default.buscaEquipamentos();
+    const equipamentos = await Pc.buscaEquipamentos();
     if (equipamentos.length === 0) {
         req.session.save(async function() {
           res.json('equipamento não existe');
@@ -58,7 +58,7 @@ exports.buscaRetorno = async function(req, res) { //busca com redorno do banco
 exports.delete = async function(req, res) { // delete de equipamento
       try {
             if (!req.params.id) return res.status('404');
-            const equipamento = await _PcModel2.default.delete(req.params.id);
+            const equipamento = await Pc.delete(req.params.id);
             if (!equipamento) return res.json(null);
             req.flash('success', 'cadastro deletato com sucesso');
             req.session.save(function() {
