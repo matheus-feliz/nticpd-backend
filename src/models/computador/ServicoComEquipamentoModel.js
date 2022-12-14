@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const EquipamentoSchema = new mongoose.Schema({ //dados
     telefone: {
@@ -59,16 +59,19 @@ class servicoComEquipamento {
     }
 
     async register() { //cadastro
-        this.limpaBody();
+        //this.limpaBody();
+        
         this.validacao();
-        await this.create();
-    }
-
-    async create() { //registra no banco de dados
+        console.log('entrou na create')
         if (this.errors.length > 0) {
             return;
         }
         this.servico = await EquipamentoMOdel.create(this.body);
+        console.log('serviço:',this.servico)
+    }
+
+    async create() { //registra no banco de dados
+       
     }
 
     limpaBody() { // garante que é uma string
@@ -92,6 +95,7 @@ class servicoComEquipamento {
         }
 
     }
+    
 
     validacao() { //valida os dados
         let dataInicialDia = this.body.dataInicial.slice(0, 2);

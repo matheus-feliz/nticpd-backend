@@ -1,23 +1,23 @@
 require('dotenv').config();
 
-import express from 'express';
+const express = require('express');
 const app = express();
 
-import routeLogin from './routes/login';
-import routeComputador  from './routes/computadorRouter/computador';
-import routeUnidade from './routes/unidadeRouter/unidade';
-import routeServicoComEquipamento  from './routes/computadorRouter/servicoComEquipamento';
-import routeServicoSemEquipamento  from './routes/unidadeRouter/servicoSemEquipamento';
-import routeRelatorio from'./routes/relatorio';
+const routeLogin = require('./src/routes/login');
+const routeComputador = require('./src/routes/computadorRouter/computador');
+const routeUnidade = require('./src/routes/unidadeRouter/unidade');
+const routeServicoComEquipamento = require('./src/routes/computadorRouter/servicoComEquipamento');
+const routeServicoSemEquipamento = require('./src/routes/unidadeRouter/servicoSemEquipamento');
+const routeRelatorio = require('./src/routes/relatorio');
 
-import mongoose from 'mongoose';
-import helmet from 'helmet';
-import cors from 'cors';
-//import csrf from 'csurf';
-import flash from 'connect-flash';
-import session from'express-session';
-import MongoStore from'connect-mongo';
-import { meuMiddleware, csrfMiddleware } from './middleware/middleware';
+const mongoose = require('mongoose');
+const helmet = require('helmet');
+const cors = require('cors');
+//const csrf = require('csurf');
+const flash = require('connect-flash');
+const session =require('express-session');
+const MongoStore =require('connect-mongo');
+const { meuMiddleware, csrfMiddleware } =require('./src/middleware/middleware');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

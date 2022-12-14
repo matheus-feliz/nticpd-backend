@@ -1,4 +1,4 @@
-import mongoose  from 'mongoose';
+const mongoose = require('mongoose');
 
 const ServicoSchema = new mongoose.Schema({ //dados
     telefone: {
@@ -44,7 +44,6 @@ class servicoSemEquipamento {
 
     async register() { //cadastro
         this.limpaBody();
-        //this.dateFormatacao();
         this.validacao();
         await this.create();
     }

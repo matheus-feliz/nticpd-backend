@@ -1,6 +1,6 @@
-import express from 'express';
+const express =require('express');
 const route = express.Router();
-import unidade from '../../controllers/unidade/unidadeController';
+const unidade =  require('../../controllers/unidade/unidadeController');
 
 //pagina de Unidade, unidade pronto
 route.post('/registrounidade',  unidade.cadastro);

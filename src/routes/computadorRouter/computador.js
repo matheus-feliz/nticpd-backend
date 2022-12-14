@@ -1,7 +1,6 @@
-import express from 'express';
+const express  = require('express');
 const route = express.Router();
-import computador from '../../controllers/computador/computadorController';
-
+const computador = require('../../controllers/computador/computadorController');
 
 
 //pagina de equipamento

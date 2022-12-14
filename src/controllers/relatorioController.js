@@ -1,5 +1,5 @@
-import ServicoComEquipamento from '../models/computador/ServicoComEquipamentoModel';
-import ServicoSemEquipamento  from '../models/unidade/ServicoSemEquipamentoModel';
+const ServicoComEquipamento = require('../models/computador/ServicoComEquipamentoModel');
+const ServicoSemEquipamento  = require('../models/unidade/ServicoSemEquipamentoModel');
 
 exports.relatorio = (req, res) => { // inicio do relatorio
     res.render('relatorio', { total: {}, totalDeServico: 0, dataInicial: '', dataFinal: '' });

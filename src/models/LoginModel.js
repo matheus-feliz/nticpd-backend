@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import valida from 'validator';
-import bcryptjs  from 'bcryptjs';
+const mongoose = require('mongoose');
+const valida = require('validator');
+const bcryptjs  =require('bcryptjs');
 
 const LoginSchema = new mongoose.Schema({//dados
     nome: {

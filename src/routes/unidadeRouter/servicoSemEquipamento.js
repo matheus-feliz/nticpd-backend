@@ -1,6 +1,6 @@
-import express from 'express';
+const express = require('express');
 const route = express.Router();
-import servicoSemEquipamento from '../../controllers/unidade/servicoSemEquipamento';
+const servicoSemEquipamento = require('../../controllers/unidade/servicoSemEquipamento');
 
 route.get('/impressaounidade/:id',  servicoSemEquipamento.impressao);
 

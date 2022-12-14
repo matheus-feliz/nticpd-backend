@@ -1,6 +1,7 @@
-import Pc from '../../models/computador/PcModel';
-import Servico  from '../../models/computador/ServicoComEquipamentoModel';
-import ServicoUnidade from '../../models/unidade/ServicoSemEquipamentoModel';
+const Pc = require( '../../models/computador/PcModel');
+const Servico  = require( '../../models/computador/ServicoComEquipamentoModel');
+const ServicoUnidade = require('../../models/unidade/ServicoSemEquipamentoModel')
+//const NumeroDeServico = require('../../models/numeroDeServico')
 
     //servico com equipamento daqui para baixo
 exports.listagem = async function(req, res) { // listagem de servico
@@ -20,30 +21,35 @@ exports.listagem = async function(req, res) { // listagem de servico
     }
 }
 
-exports.cadastroDeServicoPost = async function(req, res) { // post cadastro de servico com equipamento
+exports.cadastroDeServico = async function(req, res){
     try {
-        const servicoUnidade = await ServicoUnidade.busca();
-        const servicoEquipamento = await Servico.busca();
-        let numeroDeServico = servicoUnidade.length + servicoEquipamento.length + 1;
-        const servico = new Servico(req.body, numeroDeServico);
+        console.log('entrou aqui')
+       /* let numero = await NumeroDeServico.busca();
+        let inteiro = numero[0].numero;
+        let numeroDeServico = new NumeroDeServico(inteiro);
+        await numeroDeServico.edit("63962f8d67743fd6fe8608d3");
+        console.log('entrou aqui@', numeroDeServico.numero)*/
+        const servicoUnidade = await Servico.busca();
+        const servicoEquipamento = await ServicoUnidade.busca();
+        let numeroDeServico = servicoUnidade.length +  servicoEquipamento.length + 1
+        console.log(numeroDeServico)
+        const servico = new Servico(req.body,numeroDeServico);
         await servico.register();
+             
         if (servico.errors.length > 0) {
             req.session.save(async function() {
-                const equipamento = await Pc.buscaListagem(req.body.tombo);
-                if (!equipamento) return res.json(null);
                 res.json(servico.errors);
                 return;
             });
-            return;
         }
         req.session.save(function() {
-            res.json(servico.servico);
+            console.log('saiu aqui')
+            res.json(servico.servico)
             return;
         })
     } catch (e) {
         res.status('404');
-    }
-    
+}
 }
 exports.editServicoCadastro = async function(req, res) { // post edit de servico 
     try {

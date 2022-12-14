@@ -1,7 +1,7 @@
 
-import Unidade  from '../../models/unidade/UnidadeModel';
-import Servico  from '../../models/unidade/ServicoSemEquipamentoModel';
-import ServicoEquipamento from'../../models/computador/ServicoComEquipamentoModel';
+const Unidade  = require('../../models/unidade/UnidadeModel');
+const Servico  = require('../../models/unidade/ServicoSemEquipamentoModel');
+const ServicoEquipamento = require('../../models/computador/ServicoComEquipamentoModel');
 
 //serviço de unidade daqui para baixo
 exports.listagem = async function (req, res) { // listagem de unidade

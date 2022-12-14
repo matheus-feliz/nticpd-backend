@@ -1,17 +1,20 @@
-import Pc from '../../models/computador/PcModel';
+const Pc =require('../../models/computador/PcModel');
 
 exports.cadastro = async function(req, res) { // post cadastro de equipamento
     try {
         const pc = new Pc(req.body);
         await pc.register();
+        console.log('entrou no cadastro')
         if (pc.errors.length > 0) {
             req.session.save(function() {
-                return res.json(pc.erros);
+                 res.json(pc.errors);
+                 return
             });
             return;
         }
 
         req.session.save(function() {
+            console.log('saiu')
            res.json(pc.equipamento);
             return;
         })

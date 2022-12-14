@@ -1,5 +1,5 @@
 
-import Unidade from '../../models/unidade/UnidadeModel';
+const Unidade = require('../../models/unidade/UnidadeModel');
 
 exports.cadastro = async function (req, res) { // post cadastro de unidade
     try {

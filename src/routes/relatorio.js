@@ -1,6 +1,6 @@
-import express from 'express';
+const express = require('express');
 const route = express.Router();
-import relatorio from '../controllers/relatorioController';
+const relatorio = require('../controllers/relatorioController');
 
 route.post('/relatorioBanco',  relatorio.relatorioBanco);
 module.exports = route;

@@ -1,5 +1,5 @@
 
-import Login from '../models/LoginModel';
+const Login = require('../models/LoginModel');
 
 exports.login = async function (req, res) {//faz login
     try {
@@ -54,36 +54,34 @@ exports.register = async function (req, res) {
 }
 
 exports.esqueceu = async function (req, res) {//busca pelo id
-   /* if (typeof req.body.email !== 'string') return;
+   if (typeof req.body.email !== 'string') return;
     const user = new Login(req.body);
     const senha = await user.esqueceuSenha();
 
     if (user.errors.length > 0) {
         req.flash('errors', user.errors);
         req.session.save(function () {
-            return res.redirect('/esqueceusenha');
+            return res.json(user.errors);
         });
         return;
     }
-    res.render('esqueceuSenha', { senha });*/
-    return res.json(req.body.email);
+    return res.json(senha);
 }
 exports.senhaEdit = async function (req, res) {//update da senha
-  /*  if (!req.params.id) res.render('404');
+  if (!req.params.id) res.render('404');
     const user = new Login(req.body);
    await user.edit(req.params.id);
     if (user.errors.length > 0) {
         req.flash('errors', user.errors);
         req.session.save(async function () {
-           res.redirect(`/esqueceusenha`)
+           res.json(user.errors)
             return;
         });
         return;
     }
     req.flash('success', 'edição efetuado com sucesso');
     req.session.save(function () {
-        res.redirect(`/`);
+        res.json(`sucesso`);
         return;
-    })*/
-    return res.json(req.body.password, req.body.password2);
+    })
 }
